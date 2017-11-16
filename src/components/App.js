@@ -1,15 +1,10 @@
 // @flow
-import React, { Component } from 'react';
-import AltContainer from 'alt-container';
-import logo from './logo.svg';
-import spinner from './ajax-loader.gif'
-import './App.css';
-import { LocationStore } from '../stores/LocationStore';
-import { FavoritesStore } from '../stores/FavoritesStore';
-import { locationActions } from '../actions/LocationActions';
-import { Favorites } from './Favorites';
-import { Locations } from './Locations';
-
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import spinner from "./ajax-loader.gif";
+import "./App.css";
+import { LocationStore } from "../stores/LocationStore";
+import { locationActions } from "../actions/LocationActions";
 
 class App extends Component {
   state: {
@@ -40,12 +35,10 @@ class App extends Component {
   };
 
   render() {
-    const {errorMessage, locations} = this.state;
+    const { errorMessage, locations } = this.state;
 
     if (errorMessage) {
-      return (
-        <div>Something is wrong</div>
-      );
+      return <div>Something is wrong</div>;
     }
 
     if (!locations.length) {
@@ -53,7 +46,7 @@ class App extends Component {
         <div>
           <img src={spinner} alt="spinner" />
         </div>
-      )
+      );
     }
 
     if (LocationStore.isLoading()) {
@@ -61,7 +54,7 @@ class App extends Component {
         <div>
           <img src={spinner} alt="spinner" />
         </div>
-      )
+      );
     }
 
     return (
@@ -72,32 +65,7 @@ class App extends Component {
         </div>
         <div>
           <h1>Locations</h1>
-          <AltContainer 
-            store={LocationStore} 
-            inject={ {
-              className: 'locations',
-              locations: function (props) {
-                return LocationStore.getState().locations
-              },
-              errorMessage: function (props) {
-                return errorMessage;
-              }
-            }}>
-            <Locations />
-          </AltContainer>
-
-          <h1>Favorites</h1>
-          <AltContainer 
-            store={FavoritesStore}
-            inject={ {
-              className: 'favorites',
-              locations: function (props) {
-                return FavoritesStore.getState().locations
-              }
-            }}>
-            <Favorites />
-          </AltContainer>
-      </div>
+        </div>
       </div>
     );
   }

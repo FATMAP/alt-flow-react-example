@@ -1,20 +1,13 @@
 // @flow
-import 
-  alt
- from '../alt';
-import {
-  locationActions
-} from '../actions/LocationActions';
-import {
-  FavoritesStore
-} from './FavoritesStore';
-import { LocationSource } from '../sources/LocationSource';
+import alt from "../alt";
+import { locationActions } from "../actions/LocationActions";
+import { FavoritesStore } from "./FavoritesStore";
 
 class LocationStoreImpl {
-  locations: Array < Object > ;
-  errorMessage: ? string = null; 
-  bindListeners: (Object) => Object;
-  waitFor: (number) => void;
+  locations: Array<Object>;
+  errorMessage: ?string = null;
+  bindListeners: Object => Object;
+  waitFor: number => void;
   getState: () => Object;
   getLocation: (locationId: number) => Object;
 
@@ -28,15 +21,9 @@ class LocationStoreImpl {
       handleLocationsFailed: locationActions.LOCATIONS_FAILED,
       setFavorites: locationActions.FAVORITE_LOCATION
     });
-
-    this.registerAsync(LocationSource); // This is to expose the isLoading method to the store
-
-    this.exportPublicMethods({ // This is to expose public (static) methods other than the listeners
-      getLocation: this.getLocation
-    })
   }
 
-  handleUpdateLocations(locations: Array < Object > ): void {
+  handleUpdateLocations(locations: Array<Object>): void {
     this.locations = locations;
     this.errorMessage = null;
   }
@@ -71,7 +58,6 @@ class LocationStoreImpl {
     favoritedLocations.forEach((location: Object) => {
       // find each location in the array
       for (let i = 0; i < this.locations.length; i += 1) {
-
         // set has_favorite to true
         if (this.locations[i].id === location.id) {
           this.locations[i].has_favorite = true;
@@ -93,4 +79,7 @@ class LocationStoreImpl {
   }
 }
 
-export const LocationStore = alt.createStore(LocationStoreImpl, 'LocationStore');
+export const LocationStore = alt.createStore(
+  LocationStoreImpl,
+  "LocationStore"
+);
